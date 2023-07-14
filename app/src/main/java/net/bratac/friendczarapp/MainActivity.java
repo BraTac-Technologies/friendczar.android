@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -17,10 +18,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mywebView=(WebView) findViewById(R.id.webview);
+        mywebView.setWebChromeClient(new WebChromeClient());
         mywebView.setWebViewClient(new WebViewClient());
-        mywebView.loadUrl("https://www.chat.bratac.net/");
+        mywebView.loadUrl("https://chat.bratac.net/");
         WebSettings webSettings=mywebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setDomStorageEnabled(true);
     }
 
     public class mywebClient extends WebViewClient {

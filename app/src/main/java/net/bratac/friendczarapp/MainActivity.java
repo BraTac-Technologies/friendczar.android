@@ -6,9 +6,13 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setDomStorageEnabled(true);
         createNotificationChannel();
+        // keepAppBackground();
     }
 
     public class mywebClient extends WebViewClient {
@@ -50,8 +55,19 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (mywebView.canGoBack()) {
             mywebView.goBack();
-        } else {
-            super.onBackPressed();
+        }
+    }
+
+    private void keepAppBackground() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)  {
+            Intent intent = new Intent();
+            String packageName = getPackageName();
+            PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(Uri.parse("package:" + packageName));
+                startActivity(intent);
+            }
         }
     }
 

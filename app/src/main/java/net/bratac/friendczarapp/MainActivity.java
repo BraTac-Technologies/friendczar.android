@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         mywebView=(WebView) findViewById(R.id.webview);
         mywebView.setWebChromeClient(new WebChromeClient());
         mywebView.setWebViewClient(new WebViewClient());
-        mywebView.loadUrl("https://chat.bratac.net/");
+        mywebView.loadUrl("https://chat.bratac.pro/");
         mywebView.addJavascriptInterface(this, "Android");
         WebSettings webSettings=mywebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
